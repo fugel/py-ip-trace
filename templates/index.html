@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <title>page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.css" />
+    <script src="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.js"></script>
+    <script src="https://unpkg.com/deck.gl@8.9.33/dist.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #map {
+            height: 100%;
+        }
+
+        /* Deck.gl layer is added as an overlay, popup needs to be displayed over it */
+        .maplibregl-popup {
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello</h1>
+    <form id="domainForm" action="/search" method="post">
+        <label for="domain">Domain:</label>
+        <input type="text" id="domain" name="domain" required>
+        <button type="submit">Search</button>
+    </form>
+    <div id="map"></div>
+    <script>
+        const MAPTILER_KEY = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
+        const url = 'https://api.maptiler.com/maps/basic-v2/style.json?key=${MAPTILER_KEY}';
+
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'https://demotiles.maplibre.org/style.json',
+            center: [2.343957, 48.862011],
+            zoom: 1,
+        });
+        map.addControl(new maplibregl.NavigationControl(), 'top-right');
+
+        document.getElementById('domainForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(event.target);
+            const domain = formData.get('domain');
+
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({domain: domain})
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(async data => {
+                    console.log('Data received from server:', data);
+                    // do stuff here
+                    const image = await map.loadImage('https://maplibre.org/maplibre-gl-js/docs/assets/osgeo-logo.png');
+                    map.addImage('custom-marker', image.data);
+                    map.addSource('conferences', {'type': 'geojson', 'data': data})
+
+                    map.addLayer({
+                        'id': 'conferences',
+                        'type': 'symbol',
+                        'source': 'conferences',
+                        'layout': {
+                            'icon-image': 'custom-marker',
+                            // get the year from the source's "year" property
+                            'text-field': ['get', 'year'],
+                            'text-font': [
+                                'Open Sans Semibold',
+                                'Arial Unicode MS Bold'
+                            ],
+                            'text-offset': [0, 1.25],
+                            'text-anchor': 'top'
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                });
+
+        });
+    </script>
+</body>
+
+</html>
