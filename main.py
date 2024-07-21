@@ -26,13 +26,30 @@ def get_ip():
 
     geo = {
         "type": "FeatureCollection",
-        "features": []
+        "features": [{"type": "Feature", "geometry": {
+            "type": "LineString",
+            "coordinates": []
+        },
+            "properties": {
+            "name": "route"
+        }
+        }
+        ]
     }
 
     for hop in hops:
         # print(hop)
-        feature = {"type": "Feature", "geometry": {"type": "Point",
-                                                   "coordinates": [hop["lng"], hop["lat"]]}, "properties": {"ip": hop["ip"], "country": hop["country"]}}
+        feature = {"type": "Feature", "geometry": {
+            "type": "Point",
+            "coordinates": [float(hop["lng"]), float(hop["lat"])]
+        },
+            "properties": {
+                "ip": hop["ip"],
+                "country": hop["country"]
+        }
+        }
+        geo["features"][0]["geometry"]["coordinates"].append(
+            feature["geometry"]["coordinates"])
         geo["features"].append(feature)
 
     geojson = json.dumps(geo)
@@ -75,7 +92,7 @@ def lookup_ip(ip):
         # print(url)
         ip_lookup = requests.get(url=url)
         data = ip_lookup.json()
-        # print(f"-> { data }")
+        print(f"-> { data }")
         if data["ip"]:
             if "bogon" in data:
                 return False
