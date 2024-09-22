@@ -93,7 +93,7 @@ def lookup_ip(ip):
         # print(url)
         ip_lookup = requests.get(url=url)
         data = ip_lookup.json()
-        print(f"-> { data }")
+        # print(f"-> { data }")
         if data["ip"]:
             if "bogon" in data:
                 return False

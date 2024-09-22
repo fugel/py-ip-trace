@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>page</title>
+    <title>IP Tracer.... Almost</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.css" />
     <script src="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.js"></script>
@@ -70,7 +70,7 @@
             zoom: 1,
         });
 
-        let geo = {
+        let geo1 = {
             "type": "FeatureCollection",
             "features": [{
                 "type": "Feature", "geometry": {
@@ -81,6 +81,185 @@
                     "name": "route"
                 }
             }]
+        }
+
+        let geo = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": [
+                            [
+                                -1.1317,
+                                52.6386
+                            ],
+                            [
+                                0.5529,
+                                51.8782
+                            ],
+                            [
+                                -0.1257,
+                                51.5085
+                            ],
+                            [
+                                -0.1257,
+                                51.5085
+                            ],
+                            [
+                                -111.8911,
+                                40.7608
+                            ],
+                            [
+                                -111.8638,
+                                40.5247
+                            ],
+                            [
+                                -111.6585,
+                                40.2338
+                            ],
+                            [
+                                -111.6585,
+                                40.2338
+                            ],
+                            [
+                                -111.6585,
+                                40.2338
+                            ]
+                        ]
+                    },
+                    "properties": {
+                        "name": "route"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -1.1317,
+                            52.6386
+                        ]
+                    },
+                    "properties": {
+                        "ip": "94.6.232.148",
+                        "country": "GB"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            0.5529,
+                            51.8782
+                        ]
+                    },
+                    "properties": {
+                        "ip": "2.127.238.243",
+                        "country": "GB"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -0.1257,
+                            51.5085
+                        ]
+                    },
+                    "properties": {
+                        "ip": "2.120.15.135",
+                        "country": "GB"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -0.1257,
+                            51.5085
+                        ]
+                    },
+                    "properties": {
+                        "ip": "2.120.14.185",
+                        "country": "GB"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -111.8911,
+                            40.7608
+                        ]
+                    },
+                    "properties": {
+                        "ip": "4.69.219.58",
+                        "country": "US"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -111.8638,
+                            40.5247
+                        ]
+                    },
+                    "properties": {
+                        "ip": "4.53.7.174",
+                        "country": "US"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -111.6585,
+                            40.2338
+                        ]
+                    },
+                    "properties": {
+                        "ip": "69.195.64.111",
+                        "country": "US"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -111.6585,
+                            40.2338
+                        ]
+                    },
+                    "properties": {
+                        "ip": "162.144.240.11",
+                        "country": "US"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -111.6585,
+                            40.2338
+                        ]
+                    },
+                    "properties": {
+                        "ip": "173.254.30.113",
+                        "country": "US"
+                    }
+                }
+            ]
         }
 
         map.on('load', () => {
@@ -105,7 +284,7 @@
                 'source': 'routing',
                 'filter': ['==', '$type', 'Point'],
                 'paint': {
-                    'circle-radius': 8,
+                    'circle-radius': 6,
                     'circle-color': '#1b998b'
                 }
             });
