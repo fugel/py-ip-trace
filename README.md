@@ -1,12 +1,12 @@
 # py-ip-trace
 
-#### Video Demo: ....
+#### Video Demo: [CS50: py-ip-trace](https://youtu.be/D9mMqd29v20)
 
 #### Description:
 
-A simple web app written in python and Jinga2 templates.
+A web app written in python and Jinga2 templates.
 
-The app takes a domain name such as "bbc.co.uk", then uses mtrpacket to get all the hops in a traceroute between your IP address and that of the server hosting the site queried. 
+The app takes a domain name such as "bbc.co.uk", then uses mtrpacket to get the hops in a traceroute between your IP address and that of the server hosting the site queried. 
 
 Then using an online api to get the locations of each IP address it draws a pseudo route your web traffic would take to reach that server.
 
