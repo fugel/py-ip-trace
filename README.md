@@ -4,15 +4,19 @@
 
 #### Description:
 
-A web app written in python and Jinga2 templates.
+A web app written in python and Jinga2 templates that shows a pseudo route between the web client and server. The locations are estimated using an online api from ipinfo.io which provides a latitude and longitude among other information for the given IP address.
 
-The app takes a domain name such as "bbc.co.uk", then uses mtrpacket to get the hops in a traceroute between your IP address and that of the server hosting the site queried. 
+The after the user enters a domain name, app first gathers the client IP address using a different api; ipecho.net, where querying the URL https://ipecho.net/plain gives the users Wide Area Network IP address, this is used as the first IP address in the route.
 
-Then using an online api to get the locations of each IP address it draws a pseudo route your web traffic would take to reach that server.
+The application then takes a domain name such as "bbc.co.uk" and uses mtrpacket in a for loop to evaluate each of the hops in the traceroute between the client IP address and that of the server hosting the site queried.
+
+As part of the for loop the api at https://ipinfo.io is queried for each IP address to return the latitude and longitude. This is then used to create a geojson object that contains two types of object; points and linestrings. This are used to denote geographical points on a map for each of the reported IP addresses. The linestring is used to connect the dots and show the “route” the map.
+
+The view is generated using plain HTML and JavaScript, into which a WebGL map is created and loaded along with the minimal controls to submit a URL. The map utilises Maplibre-GL, an opensource JavaScript library for providing interactive, customizable and dynamic maps with advanced features. This takes the geojson generated as part of the above for loop and updates the view to show the locations and route once the user has submitted the URL.
 
 #### Tools
 
-For the backend I chose to use Python, I had a little experience using Pyhton but CS50 really gave me the confidence to use it more.
+For the backend I chose to use Python, I had a little experience using Python but CS50 really gave me the confidence to use it more.
 
 To ge the IP addresses of the user and the server I used ipecho.net and ipinfo.io which has a free api that allows you to query an IP address. Part of the returned data is a guesstimate of the IPs location in Latitude and Longitude.
 
